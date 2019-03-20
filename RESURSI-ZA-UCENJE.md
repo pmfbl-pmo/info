@@ -14,6 +14,6 @@
 
 * [Учимо three.js](https://github.com/skolakoda/ucimo-threejs){:target="_blank"} - Skola Koda
 
-* [three.js examples](http://stemkoski.github.io/Three.js/):target="_blank"} - Stemkovski
+* [three.js examples](http://stemkoski.github.io/Three.js/){:target="_blank"} - Stemkovski
 
 [ПМО](/README.md)

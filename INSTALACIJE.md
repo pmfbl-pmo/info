@@ -6,14 +6,14 @@
 
 ## Везе за довлачење софтвера који се користи на курсу  
 
-- [R](https://cran.r-project.org/mirrors.html){:target="_blank"}
+* Прегледач веба [Chrome](https://www.google.com/chrome/){:target="_blank"}  
 
-- [R Studio](https://www.rstudio.com/products/rstudio/download/#download){:target="_blank"}
+* Прегледач веба [Firefox](https://www.mozilla.org/sr/firefox/new/){:target="_blank"}
 
-- [Gephi](https://gephi.org/users/download/){:target="_blank"}
+* Прегледач веба [Yandex](https://browser.yandex.com/){:target="_blank"}
 
-- [BioClipse](http://bioclipse.net/download/){:target="_blank"}
+* Развојно окружење [Visual Studio Code](https://code.visualstudio.com/download){:target="_blank"}
 
-- [Chem4Word](https://github.com/Chem4Word/Version3/releases/){:target="_blank"}
+* Извршно окружење [Node.js](https://nodejs.org/en/){:target="_blank"}
 
 [ПМО](/README.md)
