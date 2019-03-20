@@ -6,10 +6,14 @@
 
 ## Књиге и радови за методичке аспекте примјене мултимедије у обазовању
 
-- Andersen B, van den Brink K. [Multimedia in Education - Curriculum](/predavanja/literatura/Multimedia in Education - Curriculum, UNESCO, 2013.pdf){:target="_blank"}
+* Andersen B, van den Brink K. [Multimedia in Education - Curriculum](/predavanja/literatura/Multimedia in Education - Curriculum, UNESCO, 2013.pdf){:target="_blank"}
 
-## Књиге и упутства за Tree.js  
+## Књиге и упутства за three.js  
 
-- [User guide](/predavanja/literatura/chemistry-add-in-for-word-user-guide.pdf){:target="_blank"}
+* [three.js documentation](https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene){:target="_blank"} - Threejs
+
+* [Учимо three.js](https://github.com/skolakoda/ucimo-threejs){:target="_blank"} - Skola Koda
+
+* [three.js examples](http://stemkoski.github.io/Three.js/):target="_blank"} - Stemkovski
 
 [ПМО](/README.md)
