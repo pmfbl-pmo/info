@@ -2,6 +2,8 @@
 
 [ПMO](../README.md)
 
+---
+
 ## Наставници и асистенти  
 
 * Наставник: **[проф. др Владимир Филиповић](https://vladofilipovic.github.io/index-en.html){:target="_blank"}**
@@ -29,5 +31,7 @@
 *[проф. др Владимир Филиповић](https://vladofilipovic.github.io/index-en.html){:target="_blank"}*
 
 *[Милана Грбић](http://www.unibl.org/fis/zaposlen/3623-milana-grbic){:target="_blank"}*
+
+---
 
 [ПMO](../README.md)
