@@ -16,6 +16,9 @@ let objekat = {
  console.log(objekat.levo);
  console.log(objekat["levo"]);
  
+objekat.centralno = 3;
+
  // provera da li je osobina sadržana u objektu
  console.log("levo" in objekat);
  console.log("desno" in objekat);
+ console.log("centralno" in objekat);

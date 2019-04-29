@@ -12,12 +12,13 @@ from other functions.
 Here is a simple constructor for rabbits. 
 */
 
-function Rabbit(type) {
+function Rabbit(type, skok = 10) {
     this.type = type;
+    this.duzinaSkoka = skok;
 }
 
-var killerRabbit = new Rabbit("killer");
-var blackRabbit = new Rabbit("black");
+let killerRabbit = new Rabbit("killer");
+let blackRabbit = new Rabbit("black", 7);
 
 console.log(blackRabbit.type);
 // → black

@@ -44,6 +44,9 @@ console.log(`${x} - ${typeof (x)}`)
 x = "1"
 console.log(`${x} - ${typeof (x)}`)
 
+x = `1${3+4}`
+console.log(`${x} - ${typeof (x)}`)
+
 x = true
 console.log(`${x} - ${typeof (x)}`)
 

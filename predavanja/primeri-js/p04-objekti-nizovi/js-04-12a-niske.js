@@ -1,5 +1,8 @@
 let niska1 = "Fido";
 
+// prikazuje string
+console.log(typeof(niska1))
+
 // prikazuje 4
 console.log(niska1.length);
 

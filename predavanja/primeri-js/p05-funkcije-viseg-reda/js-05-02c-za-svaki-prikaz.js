@@ -6,5 +6,5 @@ function zaSvaki(niz, akcija) {
         akcija(niz[i]);
 }
 
-zaSvaki(nizBrojeva, alert);
+zaSvaki(nizBrojeva, alert); 
 
