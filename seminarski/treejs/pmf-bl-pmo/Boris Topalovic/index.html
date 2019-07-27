@@ -1,0 +1,96 @@
+<html>
+
+<head>
+    <title>Morski raz</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%
+        }
+    </style>
+</head>
+
+<body>
+    <script src="js/three.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script>
+
+        (function () {
+            var script = document.createElement('script'); script.onload = function () {
+                var stats = new
+                    Stats(); document.body.appendChild(stats.dom); requestAnimationFrame(function loop() { stats.update(); requestAnimationFrame(loop) });
+            };
+            script.src = '//mrdoob.github.io/stats.js/build/stats.min.js';
+            document.head.appendChild(script);
+        })()
+
+
+        //podesavanje scene,kamere i rendera
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        //podesavanje viewporta
+        window.addEventListener('resize', function () {
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionmatrix();
+        });
+
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        //ucitavanje json objekta sa geometrijom i materijalima
+        var mesh;
+        var loader = new THREE.JSONLoader();
+        loader.load('test.json', function (geometry, materials) {
+            console.log(materials);
+            mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+            mesh.scale.x = mesh.scale.y = mesh.scale.z = 2;
+            scene.add(mesh);
+        });
+
+        camera.position.z = 17;
+        camera.position.x = 5;
+        camera.position.y = 4;
+
+        //podesavanje osvjetljenja
+        var light = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(light);
+
+        var light2 = new THREE.PointLight(0xffffff, 0.5);
+        scene.add(light2);
+
+        //animiranje objekta
+        function rotateMesh() {
+            if (!mesh) {
+                return;
+            }
+
+            mesh.rotation.x += 0.03;
+            mesh.rotation.y += 0.03;
+            mesh.rotation.z += 0.03;
+        }
+
+
+        var render = function () {
+            requestAnimationFrame(render);
+
+            rotateMesh();
+
+            renderer.render(scene, camera);
+        };
+
+        render();
+    </script>
+</body>
+
+</html>

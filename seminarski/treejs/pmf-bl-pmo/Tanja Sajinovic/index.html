@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seminarski rad</title>
+    <script src="libs/three.js"></script>
+	<script src="libs/OrbitControls.js"></script>
+	<script src="libs/dat.gui.min.js"></script>
+    <script src="libs/stats.min.js"></script>
+    <style>
+        body {
+            /* set margin to 0 and overflow to hidden, to go fullscreen */
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<script>
+
+    // globalne varijable
+    var renderer;
+    var scena;
+    var kamera;
+	var kontrola;
+	var statistika;
+	var kontrola_kamere; 
+	
+  
+    // Inicijalizuje scenu, kameru i objekte.
+    // Poziva se kada se ucitava prozor pomocu window.onload
+  
+    function init() {
+
+		// Kreira scenu koja je nosac za sve elemente kao sto su objekti, kamere i svjetlo.
+        scena = new THREE.Scene();
+
+		// Kreira kameru.
+        kamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+		// Kreira renderer, podesava boju pozadine i velicinu.
+        renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(0x000000, 1.0);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMapEnabled = true;
+	
+		// Kreira ravan.
+        var ravan_g = new THREE.PlaneGeometry(20, 20, 20, 20);
+        var materijal_za_ravan = matZaRavan();
+        var ravan = new THREE.Mesh(ravan_g, materijal_za_ravan);
+		ravan.name = 'ravan';
+    	ravan.receiveShadow = true;
+
+        // Rotira i podesava poziciju ravni.
+        ravan.rotation.x = -0.5 * Math.PI;
+        ravan.position.x = 0;
+        ravan.position.y = 0;
+        ravan.position.z = -3;
+
+        // Dodaje ravan u scenu.
+        scena.add(ravan); 
+             
+		// Kreira piramidu. 
+		 var piramida_g = new THREE.CylinderGeometry(2, 0, 5, 50, false);
+		
+		// Boji piramidu.
+		for(i = 0; i < piramida_g.faces.length; i++){ 
+			piramida_g.faces[i].vertexColors[0] = new THREE.Color(0x00ff99); 
+			piramida_g.faces[i].vertexColors[1] = new THREE.Color(0x00ff99); 
+			piramida_g.faces[i].vertexColors[2] = new THREE.Color(0xFF0066); 
+		} 
+		
+		var materijal_za_piramidu = new THREE.MeshBasicMaterial({ 
+			// aktiviranje boje vrhova
+			vertexColors:THREE.VertexColors, 
+			// renderovanje prednjih i zadnjih strana piramide
+			side:THREE.DoubleSide,
+			transparent:true, opacity:0.6
+		}); 
+	 
+		piramidaMesh = new THREE.Mesh(piramida_g, materijal_za_piramidu); 
+		piramidaMesh.position.set(0.0, 2.5, -3.0); 
+		piramidaMesh.name='piramida';
+        piramidaMesh.castShadow = true; 
+		scena.add(piramidaMesh); 
+		
+		var piramida_g2 = new THREE.CylinderGeometry(0, 2, 5, 50, false);
+		
+		for(i = 0; i < piramida_g2.faces.length; i++){ 
+			piramida_g2.faces[i].vertexColors[0] = new THREE.Color(0x00ff99); 
+			piramida_g2.faces[i].vertexColors[1] = new THREE.Color(0xFF0066); 
+			piramida_g2.faces[i].vertexColors[2] = new THREE.Color(0x00FF99); 
+		} 
+	
+		var materijal_za_piramidu2 = new THREE.MeshBasicMaterial({ 
+			vertexColors:THREE.VertexColors, 
+			side:THREE.DoubleSide, 
+			transparent:true, opacity:0.6
+		}); 
+	
+		piramidaMesh2 = new THREE.Mesh(piramida_g2, materijal_za_piramidu2); 
+		piramidaMesh2.position.set(0.0, 7.5, -3.0); 
+		piramidaMesh2.name='piramida2';
+        piramidaMesh2.castShadow = true; 
+		scena.add(piramidaMesh2);
+		
+        kamera.position.x = 15;
+        kamera.position.y = 16;
+        kamera.position.z = 13;
+        kamera.lookAt(scena.position);
+
+		// za zumiranje i rotaciju pomocu misa i transliranje pomocu tastature
+		kontrola_kamere = new THREE.OrbitControls(kamera);
+		
+        // svjetlo za sjenke
+        var spotLight = new THREE.SpotLight(0xffffff);
+        spotLight.position.set(10, 22, 9);
+        spotLight.shadowCameraNear = 20;
+        spotLight.shadowCameraFar = 35;
+        spotLight.castShadow = true;
+
+        scena.add(spotLight);
+		
+		// kontrolni gui
+        kontrola = new function() {
+        this.brzina_okretanja = 0.005;
+        this.neprozirnost = 0.6;
+        this.boja = materijal_za_piramidu.color.getHex();
+		this.boja_podloge = 0xffffff;
+        };
+
+		// dodaje gui za kontrole i statistiku
+        addControlGui(kontrola);
+        addStatsObject();
+			
+        document.body.appendChild(renderer.domElement);
+		
+        // call the render function, after the first render, interval is determined
+        // by requestAnimationFrame
+        render();
+		}
+		
+		// tekstura za ravan
+		function matZaRavan() {
+			var tekstura = THREE.ImageUtils.loadTexture("materijal/p0.jpg");
+			var materijal = new THREE.MeshBasicMaterial();
+			materijal.map = tekstura;
+			return materijal;
+		}
+		function addControlGui(controlObject) {
+			var gui = new dat.GUI();
+			gui.add(controlObject, 'brzina_okretanja', -0.05, 0.05);
+			gui.add(controlObject, 'neprozirnost', 0.1, 1);
+			gui.addColor(controlObject, 'boja');
+			gui.addColor(controlObject, 'boja_podloge');
+		}
+
+		function addStatsObject() {
+			statistika = new Stats();
+			statistika.setMode(0);
+
+			statistika.domElement.style.position = 'absolute';
+			statistika.domElement.style.left = '0px';
+			statistika.domElement.style.top = '0px';
+
+			document.body.appendChild( statistika.domElement );
+		}
+
+   
+    function render() {
+       // apdejtuje kameru
+        var rotBrz = kontrola.brzina_okretanja;
+        kamera.position.x = kamera.position.x * Math.cos(rotBrz) + kamera.position.z * Math.sin(rotBrz);
+        kamera.position.z = kamera.position.z * Math.cos(rotBrz) - kamera.position.x * Math.sin(rotBrz);
+        kamera.lookAt(scena.position);
+
+        // promjena neprozirnosti
+        scena.getObjectByName('piramida').material.opacity = kontrola.neprozirnost;
+		scena.getObjectByName('piramida2').material.opacity = kontrola.neprozirnost;
+
+        // promjena boje
+        scena.getObjectByName('piramida').material.color = new THREE.Color(kontrola.boja);
+		scena.getObjectByName('piramida2').material.color = new THREE.Color(kontrola.boja);
+		scena.getObjectByName('ravan').material.color = new THREE.Color(kontrola.boja_podloge);
+		
+        // apdejtuje statistiku
+        statistika.update();
+		kontrola_kamere.update();
+		
+        renderer.render(scena, kamera);
+
+        requestAnimationFrame(render);
+	}
+
+    function handleResize() {
+        kamera.aspect = window.innerWidth / window.innerHeight;
+        kamera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    // poziva render() kad se ucita 
+    window.onload = init;
+    // poziva handeResize() kad se promijeni velicina prozora
+    window.addEventListener('resize', handleResize, false);
+
+</script>
+<body>
+</body>
+</html>
